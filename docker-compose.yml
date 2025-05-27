@@ -11,6 +11,16 @@ services:
     networks:
       - company_api_network
 
+  mssql-init:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - mssql
+    entrypoint: /bin/bash -c "sleep 30 && /opt/mssql-tools/bin/sqlcmd -S mssql -U SA -P Password123 -i /db-init/migrations.sql"
+    volumes:
+      - ./api:/db-init
+    networks:
+      - company_api_network
+
   companyapi:
     restart: always
     build:
@@ -27,16 +37,16 @@ services:
       ASPNETCORE_URLS: http://+:5100
     command: ["dotnet", "CompanyAPI.Api.dll"]
 
-  # frontend:
-  #   restart: always
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Frontend.dockerfile
-  #   ports:
-  #     - "4200:80"
-  #   depends_on:
-  #     - mssql
-  #     - companyapi
+  frontend:
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Frontend.dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - mssql
+      - companyapi
 
 
 networks:

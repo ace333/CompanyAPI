@@ -1,0 +1,37 @@
+@CompanyAPI.Api_HostAddress = http://localhost:5072
+
+POST {{CompanyAPI.Api_HostAddress}}/company
+Content-Type: application/json
+
+{
+    "isin": "",
+    "name": "",
+    "exchange": "",
+    "ticker": "",
+    "website": ""
+}
+
+###
+
+PUT {{CompanyAPI.Api_HostAddress}}/company/1
+Content-Type: application/json
+
+{
+    "isin": "",
+    "name": "",
+    "exchange": "",
+    "ticker": "",
+    "website": ""
+}
+
+###
+
+GET {{CompanyAPI.Api_HostAddress}}/company/1
+
+###
+
+
+GET {{CompanyAPI.Api_HostAddress}}/company/isin/1
+
+###
+

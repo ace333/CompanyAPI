@@ -1,0 +1,25 @@
+<div [formGroup]="companyForm">
+  <mat-form-field>
+    <mat-label>Isin</mat-label>
+    <input matInput formControlName="isin">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Exchange</mat-label>
+    <input matInput formControlName="exchange">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Ticker</mat-label>
+    <input matInput formControlName="ticker">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Website</mat-label>
+    <input matInput formControlName="website">
+  </mat-form-field>
+</div>
+
+<button class="mg-right-1" mat-raised-button mat-button color="secondary" [routerLink]="['/grid']" >Go back</button>
+<button mat-raised-button mat-button color="primary" [disabled]="!companyForm.valid" (click)="onCreateClick()">Create</button>

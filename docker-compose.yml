@@ -1,0 +1,44 @@
+services:
+  mssql:
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SQL_USERNAME: "SA"
+      SA_PASSWORD: "Password123"
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    networks:
+      - company_api_network
+
+  companyapi:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: Company.dockerfile
+    image: company-api
+    ports:
+      - "5100:5100"
+    networks:
+      - company_api_network
+    depends_on: 
+      - mssql
+    environment:
+      ASPNETCORE_URLS: http://+:5100
+    command: ["dotnet", "CompanyAPI.Api.dll"]
+
+  # frontend:
+  #   restart: always
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Frontend.dockerfile
+  #   ports:
+  #     - "4200:80"
+  #   depends_on:
+  #     - mssql
+  #     - companyapi
+
+
+networks:
+  company_api_network:
+    driver: bridge
